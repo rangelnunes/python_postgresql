@@ -12,7 +12,15 @@ MENU_DE_OPCOES = """ ### MENU ###
     7) Sair
 """
 
+def cadastra_curso(conexao):
+    nome = input('Digite o nome do curso: ')
+    sigla = input('Digite a sigla do curso: ')
+    turno = input('Digite o turno do curso (manhã, tarde ou noite): ')
+    db.cadastra_curso(conexao, nome, sigla, turno)
+
 if __name__ == '__main__':
+    # conectando com o postgreSQL
+    conexao = db.conecta_bd()
     while(True):
         os.system('clear')
         print(MENU_DE_OPCOES)
@@ -22,7 +30,7 @@ if __name__ == '__main__':
             opcao = int(input('Digite a opcao desejada: '))
 
             if opcao == 1:
-                pass
+                cadastra_curso(conexao)
             elif opcao == 2:
                 pass
             elif opcao == 3:
@@ -34,7 +42,9 @@ if __name__ == '__main__':
             elif opcao == 6:
                 pass       
             elif opcao == 7:
-                print('Até logo!')  
+                print('Até logo!')
+                if conexao:
+                    conexao.close()  
                 break      
         except:
             print('[ERRO]: Opção inválida! Tente novamente.')
